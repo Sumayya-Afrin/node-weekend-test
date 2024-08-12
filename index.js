@@ -2,6 +2,7 @@ import express from "express"; // default
 import cors from "cors"; // default
 import { v4 } from "uuid"; //named import
 import productRouter from "./routes/products.routes.js";
+import cartRouter from "./routes/cart.routes.js";
 
 // const express = require("express");
 // const { v4 } = require("uuid");
@@ -16,4 +17,5 @@ app.get("/", function (request, response) {
 });
 
 app.use("/products", productRouter);
+app.use("/cart", cartRouter);
 app.listen(PORT, () => console.log(`The server started in: ${PORT} ✨✨`));
