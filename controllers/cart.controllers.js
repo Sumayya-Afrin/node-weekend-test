@@ -1,30 +1,32 @@
 import { Cart } from "../entities/cart.entities.js";
+import { Products } from "../entities/products.entities.js";
 import {
   addProductToCart,
   deleteProductInCart,
   getProductByIdCart,
+  getCarts,
 } from "../service/cart.service.js";
 
 async function addProductCartCtr(request, response) {
   const data = request.body;
-  //data.productId = uuidv4();
-  const addProduct = await addProductToCart(data);
 
-  response.send(addProduct.data);
+  const addToCart = await addProductToCart(data);
+
+  response.send(addToCart.data);
 }
 
 async function deleteProductInCartCtr(request, response) {
   const { id } = request.params;
-  const product_to_deleted = await Products.get({ productId: id }).go();
+  const product_to_deleted = await Cart.get({ userId: id }).go();
 
   if (product_to_deleted.data) {
     await deleteProductInCart(id);
     response.send({
-      msg: "product deleted in cart successfully",
+      msg: "cart deleted successfully",
       data: product_to_deleted.data,
     });
   } else {
-    response.status(404).send({ msg: "product not found" });
+    response.status(404).send({ msg: "cart not found " });
   }
 }
 
@@ -36,4 +38,14 @@ async function getProductsCartCtr(request, response) {
     : response.status(404).send({ msg: "product not found" });
 }
 
-export { addProductCartCtr, deleteProductInCartCtr, getProductsCartCtr };
+async function getCartCtr(request, response) {
+  const allCarts = await getCarts();
+  response.send(allCarts.data);
+}
+
+export {
+  addProductCartCtr,
+  deleteProductInCartCtr,
+  getProductsCartCtr,
+  getCartCtr,
+};

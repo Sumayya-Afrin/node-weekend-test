@@ -7,13 +7,19 @@ async function addProductToCart(data) {
 
 async function deleteProductInCart(id) {
   await Cart.delete({ userId: id }).go();
+
+  //const totalPrice = await calculateTotalPrice(products);
 }
 
 async function getProductByIdCart(id) {
   return await Cart.get({ userId: id }).go();
 }
 
+async function getCarts() {
+  return await Cart.scan.go();
+}
+
 // async function getProduct() {
 //   return await Products.scan.go();
 // }
-export { addProductToCart, deleteProductInCart, getProductByIdCart };
+export { addProductToCart, deleteProductInCart, getProductByIdCart, getCarts };

@@ -18,9 +18,16 @@ const Cart = new Entity(
       products: {
         type: "list",
         items: {
+          type: "map",
           properties: {
-            productId: { type: "string", required: true },
-            quantity: { type: "number", required: true },
+            productId: {
+              type: "string",
+              required: true,
+            },
+            quantity: {
+              type: "number",
+              required: true,
+            },
           },
         },
       },
@@ -43,7 +50,7 @@ const Cart = new Entity(
       },
     },
   },
-  { client: client, table: "cart" }
+  { client: client, table: "Cart" }
 );
 
 export { Cart };
