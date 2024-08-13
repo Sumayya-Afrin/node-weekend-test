@@ -7,8 +7,8 @@ import { auth } from "../Middlewares/auth.middleware.js";
 
 const router = express.Router();
 
-router.get("/:id", auth, createOrderCtr);
-router.get("/:id", auth, getOrdersCtr);
+router.get("/:id", createOrderCtr);
+router.get("/:id", getOrdersCtr);
 
 export default router;
 

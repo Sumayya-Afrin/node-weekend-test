@@ -10,11 +10,11 @@ import { auth } from "../Middlewares/auth.middleware.js";
 
 const router = express.Router();
 
-router.get("/", auth, getProductsCtr);
-router.get("/:id", auth, getProductsByIdCtr);
-router.delete("/del/:id", auth, deleteProductByIdCtr);
-router.post("/", auth, createProductByIdCtr);
-router.put("/:id", auth, editProductByIdCtr);
+router.get("/", getProductsCtr);
+router.get("/:id", getProductsByIdCtr);
+router.delete("/del/:id", deleteProductByIdCtr);
+router.post("/", createProductByIdCtr);
+router.put("/:id", editProductByIdCtr);
 
 export default router;
 
