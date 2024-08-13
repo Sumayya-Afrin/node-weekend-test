@@ -1,5 +1,6 @@
 import { Cart } from "../entities/cart.entities.js";
 import { Products } from "../entities/products.entities.js";
+import { v4 as uuidv4 } from "uuid";
 import {
   addProductToCart,
   deleteProductInCart,
@@ -11,7 +12,7 @@ import { createProduct, getProductById } from "../service/product.service.js";
 async function addProductCartCtr(request, response) {
   const data = request.body;
 
-  const addToCart = { ...data, userId: v4() };
+  const addToCart = { ...data, userId: uuidv4() };
 
   try {
     const product = await getProductById(data.products[0].productId);
@@ -28,6 +29,7 @@ async function addProductCartCtr(request, response) {
 async function deleteProductInCartCtr(request, response) {
   const { id } = request.params;
   const product_to_deleted = await Cart.get({ userId: id }).go();
+  console.log(product_to_deleted);
 
   if (product_to_deleted.data) {
     await deleteProductInCart(id);
