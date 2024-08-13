@@ -6,13 +6,23 @@ import {
   getProductByIdCart,
   getCarts,
 } from "../service/cart.service.js";
+import { createProduct, getProductById } from "../service/product.service.js";
 
 async function addProductCartCtr(request, response) {
   const data = request.body;
 
-  const addToCart = await addProductToCart(data);
+  const addToCart = { ...data, userId: v4() };
 
-  response.send(addToCart.data);
+  try {
+    const product = await getProductById(data.products[0].productId);
+    await addProductToCart({
+      ...addToCart,
+      totalPrice: +product.data.price * +data.products[0].quantity,
+    });
+    response.send(addToCart);
+  } catch (error) {
+    response.status(500).send({ msg: "Cannot create" });
+  }
 }
 
 async function deleteProductInCartCtr(request, response) {

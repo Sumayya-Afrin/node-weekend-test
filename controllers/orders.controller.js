@@ -1,21 +1,18 @@
 import { Orders } from "../entities/orders.entity.js";
 import { Products } from "../entities/products.entities.js";
 import {
-  createOrder,
-  getOrdersByIdCart,
-  getOrders,
-} from "../service/order.service.js";
+  deleteProductInCart,
+  getProductByIdCart,
+} from "../service/cart.service.js";
+import { createOrder, getOrders } from "../service/order.service.js";
 
 async function createOrderCtr(request, response) {
-  const { userId } = request.user;
+  const { userId } = request.body;
 
-  try {
-    const order = await createOrder(userId);
-    response.status(201).json(order);
-  } catch (error) {
-    response.status(400).send(error.message);
-  }
-  //   const data = request.body;
+  const data = await getProductByIdCart(userId);
+  await createOrder(data);
+  // response.status(201).send(order);
+  await deleteProductInCart(userId);
 
   //   const addToCart = await createOrder(data);
 
@@ -30,4 +27,4 @@ async function getOrdersCtr(request, response) {
     : response.status(404).send({ msg: "product not found" });
 }
 
-export { createOrderCtr, getOrdersByIdCartCtr, getOrdersCtr };
+export { createOrderCtr, getOrdersCtr };
